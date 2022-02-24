@@ -1,1 +1,1 @@
-# master_thesis_2022
+# Master thesis 2022
