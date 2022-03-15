@@ -2,7 +2,7 @@ import os
 import tweepy as tw
 import pandas as pd 
 
-os.chdir("C:/Users/richa/OneDrive/Documenten/GitHub/master_thesis_2022/data") # created folder to save the meme information from searchtweets
+cd = os.path.dirname(os.path.abspath('data_processing.py'))
 
 api_key = 'GeXlknuvqxMFPG3UjK1b6qeK0'
 api_secret = 'jwe70Ch2h8FzmFkKVnLjhwFRPCHBHNP92iM5240aZuuosk8JZg'
@@ -19,7 +19,7 @@ api = tw.API(auth)
 class Linstener(tw.Stream):
 
     tweets = []
-    limit = 500
+    limit = 1000
 
     def on_status(self, status):
         self.tweets.append(status)
@@ -33,20 +33,30 @@ class Linstener(tw.Stream):
 stream_tweet = Linstener(api_key, api_secret, access_token, access_token_secret)
 
 # stream by keywords
-keywords = ['2022', '#Memes']
+keywords = ['2022', '#dankmemes']
 
 
 stream_tweet.filter(track = keywords)
 
 # create DataFrame
-columns = ['User', 'Tweet', 'Date']
+columns = ['User', 'Tweet', 'Date', 'Hashtags']
 data = []
 
 for tweet in stream_tweet.tweets:
     if not tweet.truncated:
-        data.append([tweet.user.screen_name, tweet.text, tweet.])
+        data.append([tweet.user.screen_name, tweet.text, tweet.user.created_at, tweet.entities['hashtags']])
     else:
-        data.append([tweet.user.screen_name, tweet.extended_tweet['full_text'], tweet.Date])
+        data.append([tweet.user.screen_name, tweet.extended_tweet['full_text'], tweet.user.created_at, tweet.entities['hashtags']])
 
 df = pd.DataFrame(data, columns = columns)
+
+
+for tweet in stream_tweet.tweets: 
+    if 'media' in tweet.entities:
+        for image in tweet.entities['media']:
+            df['Image'] = image['media_url']
+
+df = df[df['Image'].notna()]
+df
+df.to_csv('data/df.csv', index = False)
 df
