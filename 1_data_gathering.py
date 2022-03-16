@@ -2,7 +2,7 @@ import os
 import tweepy as tw
 import pandas as pd 
 
-cd = os.path.dirname(os.path.abspath('data_processing.py'))
+cd = os.path.dirname(os.path.abspath('1_data_gathering.py'))
 
 api_key = 'GeXlknuvqxMFPG3UjK1b6qeK0'
 api_secret = 'jwe70Ch2h8FzmFkKVnLjhwFRPCHBHNP92iM5240aZuuosk8JZg'
