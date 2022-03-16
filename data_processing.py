@@ -15,7 +15,6 @@ auth.set_access_token(access_token, access_token_secret)
 
 api = tw.API(auth)
 
-
 class Linstener(tw.Stream):
 
     tweets = []
@@ -23,40 +22,29 @@ class Linstener(tw.Stream):
 
     def on_status(self, status):
         self.tweets.append(status)
-        # print(status.user.screen_name + ": " + status.text)
 
         if len(self.tweets) == self.limit:
             self.disconnect()
 
-
-
 stream_tweet = Linstener(api_key, api_secret, access_token, access_token_secret)
 
 # stream by keywords
-keywords = ['2022', '#dankmemes']
-
+keywords = ["#dankmemes"]
 
 stream_tweet.filter(track = keywords)
 
 # create DataFrame
-columns = ['User', 'Tweet', 'Date', 'Hashtags']
+columns = ['User', 'Tweet', 'Date', 'Hashtags', 'Image']
 data = []
 
-for tweet in stream_tweet.tweets:
-    if not tweet.truncated:
-        data.append([tweet.user.screen_name, tweet.text, tweet.user.created_at, tweet.entities['hashtags']])
-    else:
-        data.append([tweet.user.screen_name, tweet.extended_tweet['full_text'], tweet.user.created_at, tweet.entities['hashtags']])
+for tweet in stream_tweet.tweets: 
+    if 'media' in tweet.entities: 
+        for image in tweet.entities['media']:
+            if not tweet.truncated: 
+                data.append([tweet.user.screen_name, tweet.text, tweet.user.created_at, tweet.entities['hashtags'], image['media_url']])
+            else: 
+                data.append([tweet.user.screen_name, tweet.extended_tweet['full_text'], tweet.user.created_at, tweet.entities['hashtags'], image['media_url']])
 
 df = pd.DataFrame(data, columns = columns)
-
-
-for tweet in stream_tweet.tweets: 
-    if 'media' in tweet.entities:
-        for image in tweet.entities['media']:
-            df['Image'] = image['media_url']
-
-df = df[df['Image'].notna()]
 df
-df.to_csv('data/df.csv', index = False)
-df
+df.to_csv('data/df_2.csv', index = False)
