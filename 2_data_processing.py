@@ -14,11 +14,14 @@ cd = os.path.dirname(os.path.abspath('2_data_processing.py'))
 df = pd.read_csv('data\df.csv')
 df_1 = pd.read_csv('data\df_1.csv')
 df_2 = pd.read_csv('data\df_2.csv')
+df_3 = pd.read_csv('data\df_3.csv')
+df_4 = pd.read_csv('data\df_4.csv')
+df_5 = pd.read_csv('data\df_5.csv')
 
-df_fin = df.append([df_1, df_2]).reset_index().drop(columns = 'index')
-df_fin = df_fin.drop_duplicates(subset = None).reset_index(drop = True)
-df_fin
+df_fin = df.append([df_1, df_2, df_3, df_4, df_5]).reset_index().drop(columns = 'index')
+df_fin = df_fin.drop_duplicates(subset = "Image").reset_index(drop = True)
 df_fin.to_csv('data/df_fin.csv', index = False)
+df_fin
 
 # Store images from url 
 def download(url, pathname):
