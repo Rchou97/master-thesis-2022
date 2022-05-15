@@ -4,10 +4,10 @@ import pandas as pd
 
 cd = os.path.dirname(os.path.abspath('1_data_gathering.py'))
 
-api_key = 'GeXlknuvqxMFPG3UjK1b6qeK0'
-api_secret = 'jwe70Ch2h8FzmFkKVnLjhwFRPCHBHNP92iM5240aZuuosk8JZg'
-access_token = '1496989590716100612-pD4d0gHA8tPdyah9DL3sUNxRDA45Oc'
-access_token_secret = 'cVk19f8Xu8LPkALuSwRxfFAFJMOgiD4fea6YnJhGK2ybR'
+api_key = #####
+api_secret = #####
+access_token = #####
+access_token_secret = #####
 
 # authentication
 auth = tw.OAuthHandler(api_key, api_secret)
@@ -46,6 +46,4 @@ for tweet in stream_tweet.tweets:
                 image['media_url']])
 
 df = pd.DataFrame(data, columns = columns)
-df
-df['Language']
-df.to_csv('data/dankmemes_3.csv', index = False)
+df.to_csv('data/df_meme_4.csv', index = False)
