@@ -40,4 +40,4 @@ A small explanation for each folder and file:
 |   └── *dataset to upload to Google Colab env
 ```
 
-Every file was run on a local machine, except for the Notebooks, which were setup within Google Colab Pro. Clone the [Vilio](https://github.com/Rchou97/vilio) repository and upload it in the Drive environment to run the Vilio Notebook. 
+Every file was run on a local machine, except for the ```notebooks```, which were setup within Google Colab Pro. Clone the [Vilio](https://github.com/Rchou97/vilio) repository and upload it in the Drive environment to run the Vilio Notebook. 
